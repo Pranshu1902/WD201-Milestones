@@ -87,15 +87,6 @@
         </button>
       </div>
     </form>
-
-    <div class="w-full flex justify-center">
-      <button
-        id="showEntries"
-        class="w-1/5 bg-green-500 hover:bg-green-700 rounded-lg p-3 font-bold text-white"
-      >
-        Show Entries
-      </button>
-    </div>
     <div class="flex flex-col justify-center items-center p-6" id="entries">
       <table id="table" class="bg-gray-200 rounded-lg text-xl">
         <tr class="text-3xl bg-white justify-between w-full">
@@ -170,9 +161,17 @@
       } else {
         error = errorMessage.join("<br>");
       }
-      // document.getElementById("name").innerHTML = "";
-      document.getElementById("error").innerHTML = error;
+
       showEntriesInTable();
+
+      // clear the form after submission
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+      document.getElementById("dob").value = "";
+      document.getElementById("acceptTerms").checked = false;
+
+      document.getElementById("error").innerHTML = error;
     }
 
     // form
@@ -180,9 +179,7 @@
     form.addEventListener("submit", validator, true);
 
     //show entries
-    function showEntriesInTable(event) {
-      event.preventDefault();
-
+    function showEntriesInTable() {
       let entries = JSON.parse(localStorage.getItem("entries"));
       let output = document.getElementById("table");
 
@@ -214,9 +211,5 @@
         t1.classList.add("text-red-500");
       }
     }
-
-    // button to show entries
-    const showEntriesBtn = document.getElementById("showEntries");
-    showEntriesBtn.addEventListener("click", showEntriesInTable, true);
   </script>
 </html>
