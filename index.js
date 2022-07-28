@@ -1,5 +1,11 @@
 const http = require("http");
 const fs = require("fs");
+const readline = require("readline");
+
+const lineDetail = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
 let homeContent = "";
 let formContent = "";
@@ -12,11 +18,19 @@ fs.readFile("home.html", function (err, home) {
   homeContent = home;
 });
 
-fs.readFile("survey/form.html", function (err, form) {
-  if (err) {
-    throw err;
-  }
-  formContent = form;
+// fs.readFile("form.html", function (err, form) {
+//   if (err) {
+//     throw err;
+//   }
+//   formContent = form;
+// });
+
+// read file path from user as input which is "form.html"
+lineDetail.question(`Please provide the full file path - `, (path) => {
+  fs.readFile(path, function (err, form) {
+    if (err) throw err;
+    formContent = form;
+  });
 });
 
 fs.readFile("project.html", function (err, project) {
