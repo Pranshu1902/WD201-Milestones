@@ -7,27 +7,29 @@ const todoList = () => {
     all[index].completed = true;
   };
 
-  const overdue = (item) => {
-    all.map((task) => console.log(task.dueDate));
+  const overdue = () => {
     const d = new Date();
-    console.log(d.getFullYear() + "-" + d.getMonth() - 2 + "-" + d.getDate());
-    const currentDate =
-      d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
-    return all.filter((task) => task.dueDate.toString() < currentDate);
+    return all.filter((task) => task.dueDate < formattedDate(d));
   };
 
-  const dueToday = (item) => {
-    return all.filter((task) => task.dueDate == formattedDate(new Date()));
+  const dueToday = () => {
+    const d = new Date();
+    return all.filter((task) => task.dueDate == formattedDate(d));
   };
 
-  const dueLater = (item) => {
-    return all.filter((task) => task.dueDate > formattedDate(new Date()));
+  const dueLater = () => {
+    const d = new Date();
+    return all.filter((task) => task.dueDate > formattedDate(d));
   };
 
   const toDisplayableList = (list) => {
-    return list.map((task) => {
-      "[" + task.completed ? "X" : " " + "] " + task.title + " " + task.dueDate;
+    let output = "";
+    list.forEach((task) => {
+      output += `[${task.completed ? "X" : " "}] ${task.title} ${
+        task.dueDate == formattedDate(new Date()) ? "" : task.dueDate
+      }\n`;
     });
+    return output;
   };
 
   return {
