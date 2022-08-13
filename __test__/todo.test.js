@@ -1,6 +1,6 @@
 let todoList = require("../todo");
 
-const { all, overDue, markAsComplete, add } = todoList();
+const { all, dueToday, dueLater, overDue, markAsComplete, add } = todoList();
 
 describe("Todo List Test Suite", () => {
   // test initial length of array is 0
@@ -33,9 +33,9 @@ describe("Todo List Test Suite", () => {
     add({
       title: "A overdue item",
       completed: false,
-      dueDate: yesterday.toLocaleDateString("en-CA"),
+      dueDate: new Date(d.setDate(d.getDate() - 1)).toLocaleDateString("en-CA"),
     });
-    expect(overDue()[0].title).toEqual("A overdue item");
+    expect(overDue().length).toEqual(1);
   });
 
   // retrieve due today items
@@ -45,7 +45,7 @@ describe("Todo List Test Suite", () => {
       completed: false,
       dueDate: new Date().toLocaleDateString("en-CA"),
     });
-    expect(dueToday()[1].title).toEqual("A due today item");
+    expect(dueToday().length).toEqual(2);
   });
 
   // retrieve due later items
@@ -55,8 +55,8 @@ describe("Todo List Test Suite", () => {
     add({
       title: "A due later item",
       completed: false,
-      dueDate: tomorrow.toLocaleDateString("en-CA"),
+      dueDate: new Date(d.setDate(d.getDate() + 1)).toLocaleDateString("en-CA"),
     });
-    expect(dueLater()[1].title).toEqual("A due later item");
+    expect(dueLater().length).toEqual(1);
   });
 });
