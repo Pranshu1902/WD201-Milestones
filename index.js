@@ -1,5 +1,5 @@
 function hello() {
-  console.log("Welcome to Node.js, by Pranshu");
+  console.log("Hello Node.js!");
 }
 
 hello();
